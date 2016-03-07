@@ -1,0 +1,24 @@
+site_name: p_nutyx
+site_url: https://p-nutyx.github.io/p_nutyx/
+site_description: Core of the NuTyX-Linux distribution. (development repository of peter1000)
+site_author: peter1000
+#site_favicon: images/p_nutyx_favicon.ico
+
+repo_url: https://github.com/P-NuTyX/p_nutyx/
+
+pages:
+- Home: 'index.md'
+- Build From Scratch:
+    - Preparation: build_from_scratch/1_preparation.md
+    - Pass1: build_from_scratch/2_pass1.md
+    - Pass2: build_from_scratch/3_pass2.md
+    - Post Configuration: build_from_scratch/4_post_configuration.md
+    - Generate An ISO: build_from_scratch/5_generate_an_iso.md
+- About:
+    - Readme: about/readme.md
+    - Changelog: about/changelog.md
+
+use_directory_urls: true
+copyright: Copyright (c) 2016, <strong>peter1000</strong> <a href="https://github.com/peter1000">https://github.com/peter1000</a> plus contributors.
+
+theme: 'bootstrap'
