@@ -5,10 +5,10 @@ To procceed with this step you MUST have finished the previous part: *Pass1 - Bu
 
 ## General Notes
 
-**NOTE**: If you have an error when compiling a package, it's not a big deal, when you restart the command `pass` the 
-script will restart where it has stoped. 
+**NOTE**: If you have an error when compiling a package, it's not a big deal, when you restart the command `pass` the
+script will restart where it has stoped.
 
-**NOTE**: You can build the *pass 2* serveral times. If you went out of the CHROOT, you MUST make sure to 
+**NOTE**: You can build the *pass 2* serveral times. If you went out of the CHROOT, you MUST make sure to
 
 * Enter AGAIN the CHROOT (step 9)
 * Define AGAIN the PATH variable (step 10)
@@ -36,7 +36,7 @@ exit
 
 MAKE SURE THE **LFS VARIABLE** IS PROPERLY SET OTHERWISE YOU MAY BREAK YOUR HOST DISTRIBUTION.
 
-The LFS variable is used throughout the guide, it MUST be set correctly and that it point always to the same folder. 
+The LFS variable is used throughout the guide, it MUST be set correctly and that it point always to the same folder.
 
 ```bash
 echo $LFS
@@ -53,7 +53,7 @@ chown -R root:root $LFS
 
 ### 3. Set Up The Port Folders And Links
 
-We create the folders for the NuTyX build-recipes and log files. We create also a link so that the script 
+We create the folders for the NuTyX build-recipes and log files. We create also a link so that the script
 `pass` is found. Afterwards we move the build-recipes (ports) to the right place.
 
 ```bash
@@ -64,9 +64,9 @@ mv /home/lfs/current $LFS/root/
 ```
 
 
-### 4. Build The `nutyx` Package 
+### 4. Build The `nutyx` Package
 
-We will now compile the first package which is **nutyx*. For this we change first to it's port folder.
+We will now compile the first package which is **nutyx**. For this we change first to it's port folder.
 This package does not contain any code - it just creates all the folders for a Base-NuTyX-Linux distribution.
 
 Option `pkgmk`: -cf,  --config-file <file>:  use alternative configuration file
@@ -124,7 +124,7 @@ chmod 1777 /dev/shm
 ```
 
 
-### 7. Copy The `resolv.conf` File 
+### 7. Copy The `resolv.conf` File
 
 In case of a package needs to download something (for exemple the kernel) we copy the `resolv.conf` file from the host.
 
@@ -135,7 +135,7 @@ cp -v /etc/resolv.conf $LFS/etc
 
 ### 8. Recheck The Setup
 
-We check that all the folders/filesystems are correctly mounted via the command: 
+We check that all the folders/filesystems are correctly mounted via the command:
 
 ```bash
 mount|grep $LFS
@@ -155,7 +155,7 @@ shm on /mnt/lfs/dev/shm type tmpfs (rw)
 
 ### 9. Enter The New NuTyX CHROOT
 
-We can now enter the CHROOT of the new NuTyX-Linux. As it has no program at the right place, we get all kind of 
+We can now enter the CHROOT of the new NuTyX-Linux. As it has no program at the right place, we get all kind of
 messages which can be ignored. This will be solved when we redefine the PATH variable.
 
 
