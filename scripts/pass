@@ -1,12 +1,4 @@
 #!/bin/bash
-#
-# Functions
-#
-
-abort() {
-echo " ===> ERROR: $i"
-exit 1
-}
 
 #
 ## Begin
