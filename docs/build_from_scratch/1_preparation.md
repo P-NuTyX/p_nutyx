@@ -110,7 +110,7 @@ mount -t tmpfs -o defaults,noatime,size=80%  pkgmk /var/pkgmk
 #### 3. Verify it is enabled
 
 ```bash
-df
+df -h
 ```
 
 #### 4. OPTIONAL: Add this line to the end of /etc/fstab to make the change permanent.
@@ -182,5 +182,5 @@ free -h
 #### To Check TMPFS usage
 
 ```bash
-df
+df -h
 ```
