@@ -1,8 +1,25 @@
 #!/bin/bash
 
-#
-## Begin
-#
+THIS_SCRIPT_PATH="$(readlink -f "$(type -P $0 || echo $0)")"
+THIS_SCRIPT_DIR="$(dirname "$THIS_SCRIPT_PATH")"
+source $THIS_SCRIPT_DIR/color_messages.sh
+trap "interrupted" SIGHUP SIGINT SIGQUIT SIGTERM
+color_mesg
+
+#**********************************************************************************************************************
+#   Option for alternative `pkgmk.conf.passes` file name: example: `pass pkgmk_no_pipe.conf.passes` 
+#**********************************************************************************************************************
+PKGMK_CONF_NAME='pkgmk.conf.passes'
+if [ -n "$1" ]; then
+    PKGMK_CONF_NAME="$1"
+fi
+
+
+#**********************************************************************************************************************
+#   Main part 
+#**********************************************************************************************************************
+
+msg "$(gettext "Running script: '%s' with pkgmk.conf: '%s'")" "${THIS_SCRIPT_PATH##*/}" "$PKGMK_CONF_NAME"
 
 if [ -z "$LOG" ]; then
     PASS=`pwd`
@@ -35,7 +52,7 @@ do
         case $PASS in
             cross)
                 PKGMK="pkgmk.passes"
-                $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1;;
+                $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1;;
             tools)
                 export CC="${CLFS_TARGET}-gcc"
                 export CXX="${CLFS_TARGET}-g++"
@@ -45,73 +62,78 @@ do
                 export LD="${CLFS_TARGET}-ld"
                 export STRIP="${CLFS_TARGET}-strip"
                 PKGMK="pkgmk.passes"
-                $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1;;
+                $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1;;
             chroot)
                 PKGMK="pkgmk.passes"
-                $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1;;
+                $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1;;
             base-arm)
                 PKGMK="pkgmk";;
             base)
                 PKGMK="pkgmk"
                 case $NAME in
                     gcc)
-                        $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
+                        $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
                         rm -fv /usr/lib{,64}/libgcc_s.so{,.1}
                         rm -fv /usr/lib{,64}/libstdc++.so{,.6}
                         rm -fv /usr/lib{,64}/libstdc++.la
-                        $PKGMK -d -cf ../../../bin/pkgmk.conf.passes -i || exit 1
+                        $PKGMK -d -cf ../../../bin/$PKGMK_CONF_NAME -i || exit 1
                         for i in *cards.tar*
                         do
                             echo "=======> Installing '$i' succeeded." >> ${LOG}/$NAME.log
+                            msg2 "$(gettext "Installing: '%s' succeeded.")" "$i"
                         done
                         ;;
                     bash)
-                        $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
+                        $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
                         rm /bin/bash
                         rm /bin/sh
-                        echo "need to install bash manually"
+                        msg "$(gettext "Please install 'bash' manually.")"
                         echo "=======> Installing '$NAME' succeeded." >> ${LOG}/$NAME.log
                         exit 1
-                        $PKGMK -d -cf ../../../bin/pkgmk.conf.passes -i
+                        $PKGMK -d -cf ../../../bin/$PKGMK_CONF_NAME -i
                         ;;
                     coreutils)
-                        $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
+                        $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
                         rm -f /usr/bin/env
                         for i in cat echo pwd stty
                         do
                             rm -f /bin/$i
                         done
-                        $PKGMK -d -cf ../../../bin/pkgmk.conf.passes -i || exit 1
+                        $PKGMK -d -cf ../../../bin/$PKGMK_CONF_NAME -i || exit 1
                         for i in *cards.tar*
                         do
                             echo "=======> Installing '$i' succeeded." >> ${LOG}/$NAME.log
+                            msg2 "$(gettext "Installing: '%s' succeeded.")" "$i"
                         done
                         ;;
 
                     perl)
-                        $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
+                        $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
                         rm -f /usr/bin/perl
-                        $PKGMK -d -cf ../../../bin/pkgmk.conf.passes -i || exit 1
+                        $PKGMK -d -cf ../../../bin/$PKGMK_CONF_NAME -i || exit 1
                         for i in *cards.tar*
                         do
                             echo "=======> Installing '$i' succeeded." >> ${LOG}/$NAME.log
+                            msg2 "$(gettext "Installing: '%s' succeeded.")" "$i"
                         done
                         ;;
                     cards)
-                        $PKGMK -cf ../../../bin/pkgmk.conf.passes -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
+                        $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
                         rm -f /etc/pkgadd.conf
-                        $PKGMK -d -cf ../../../bin/pkgmk.conf.passes -i || exit 1
+                        $PKGMK -d -cf ../../../bin/$PKGMK_CONF_NAME -i || exit 1
                         for i in *cards.tar*
                         do
                             echo "=======> Installing '$i' succeeded." >> ${LOG}/$NAME.log
+                            msg2 "$(gettext "Installing: '%s' succeeded.")" "$i"
                         done
                         ;;
                     kernel)
-                        $PKGMK -d -cf ../../../bin/pkgmk.conf.passes -i -kw || exit 1
+                        $PKGMK -d -cf ../../../bin/$PKGMK_CONF_NAME -i -kw || exit 1
                         echo "=======> Installing '$NAME' succeeded." >> ${LOG}/$NAME.log
+                        msg2 "$(gettext "Installing: '%s' succeeded.")" "$NAME"
                         ;;
                     *)
-                        $PKGMK -cf ../../../bin/pkgmk.conf.passes -i -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
+                        $PKGMK -cf ../../../bin/$PKGMK_CONF_NAME -i -kw 2>&1|tee ${LOG}/$NAME.log || exit 1
                         ;;
                 esac;;
             *)
