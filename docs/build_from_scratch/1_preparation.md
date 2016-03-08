@@ -72,7 +72,7 @@ mkdir /mnt/lfs
     * TIP: Make sure this partition is always mounted prior to the start of `pass 1 or 2`.
 
 
-## Speed Up Compilation (OPTIONAL)
+## Speed Up Compilation (OPTIONAL) RAM Disk
 
 This is part is OPTIONAL.
 
@@ -81,6 +81,7 @@ RAM Disk.
 
 Note you need a decent amount of ram that is dynamically used (this won't be used when you are not building a package).
 Recommended are 4 GiB or more.
+
 
 ### Edit the host `fstab`
 

@@ -4,7 +4,7 @@ In this part we will build up a CHROOT environment which will be used to build a
 
 We start by creating folders, links and the right user account.
 
-The first part of preparation is done via the root account of the host and the second directly in the 
+The first part of preparation is done via the root account of the host and the second directly in the
 unpriviledge account `LFS`.
 
 The build time of the first pass takes about 1 hour( with a 8 cores processor).
@@ -91,7 +91,7 @@ cd current
 
 ### Launch The First Script
 
-The script will run some checks and NO error should occur. The downloading of the sources will start automatically. 
+The script will run some checks and NO error should occur. The downloading of the sources will start automatically.
 
 NOTE: one can re-run this scripts in case it was interrupted.
 
@@ -110,12 +110,33 @@ If your read this, congratulations you are ready to launch the first pass.
 
 ### Run The First PASS Script
 
-```bash
-cd /home/lfs/current/chroot
-pass
-```
-
-**NOTE** you can follow the build and check that everything goes well by consulting the folder 
+**NOTE** you can follow the build and check that everything goes well by consulting the folder
 `/home/lfs/logs/chroot/`. For each *package* a corresponding logfile is created.
 
 We will see in the next section how to enter the CHROOT and to build a Base-NuTyX-Linux.
+
+Change the directory by running:
+
+```bash
+cd /home/lfs/current/chroot
+```
+
+
+#### With (OPTIONAL) RAM Disk
+
+If you configured the (OPTIONAL) RAM Disk there is no point in keeping -pipe as this will decrease performance.
+
+```bash
+pass pkgmk.conf_no_pipe.passes
+```
+
+
+#### Without (OPTIONAL) RAM Disk
+
+Just run the commnd below which will use the default: `pkgmk.conf.passes` with -pipe.
+
+```bash
+pass
+```
+
+
