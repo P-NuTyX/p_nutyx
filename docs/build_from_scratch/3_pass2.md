@@ -79,7 +79,27 @@ cd $LFS/root/current/base/nutyx
 
 #### With (OPTIONAL) RAM Disk
 
+
+**Create the build directory**
+
+The `scripts/pkgmk.conf_ram_disk.passes` uses as build directory `PKGMK_WORK_DIR="/var/pkgmk/work"`.
+
+```bash
+mkdir -p /var/pkgmk
+```
+
+
+**Mount the tmpfs**
+
+Set **size=80%** or a defined number **size=3G**
+
+
+```bash
+mount -t tmpfs -o defaults,noatime,size=80%  pkgmk /var/pkgmk
+```
+
 If you configured the (OPTIONAL) RAM Disk run the command below using: `pkgmk.conf_ram_disk.passes`.
+
 
 ```bash
 /tools/bin/pkgmk -cf ../../../bin/pkgmk.conf_ram_disk.passes
@@ -114,8 +134,8 @@ Just run the command below using: `pkgmk.conf.passes`.
 This command should return:
 
 ```
-nutyx 8.0...
-nutyx.man 8.0...
+nutyx ...
+nutyx.man ...
 ```
 
 
@@ -129,8 +149,6 @@ bash $LFS/root/current/scripts/install-nutyx -ic
 
 
 ### 6. Mount Needed Folders / Filesystems
-
-**TODO** check what needs to be changed for using the optional RAM Disk
 
 ```bash
 mount -v -B /dev $LFS/dev
