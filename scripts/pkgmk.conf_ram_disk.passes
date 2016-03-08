@@ -16,7 +16,7 @@ case "`uname -m`" in
                 exit 1
                 ;;
 esac
-PKGMK_WORK_DIR="/tmp/work"
+PKGMK_WORK_DIR="/var/pkgmk/work"
 PKGMK_SOURCE_DIR="/sources"
 PKGMK_SYNC_FILES="no"
 PKGMK_COMPRESS_PACKAGE="yes"

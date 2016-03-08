@@ -75,7 +75,7 @@ mkdir /mnt/lfs
 -----------------------------------------------------------------------------------------------------------------------
 
 
-## Speed Up Compilation (OPTIONAL) RAM Disk
+## Speed Up Compilation (OPTIONAL) RAM Disk, SAWP File
 
 This is part is OPTIONAL.
 
@@ -89,28 +89,42 @@ Note you need a decent amount of ram that is dynamically used (this won't be use
 Recommended are 4 GiB or more.
 
 
-#### Edit the host `fstab`
+#### 1. Create the build directory
 
-The `scripts/pkgmk.conf.passes` uses as build directory `PKGMK_WORK_DIR="/tmp/work"`.
-
-Add to the host `fstab` a line similar to this: where **size=80%** or set a fix number **size=3G**
-
-```
-lfs   /tmp/work tmpfs  defaults,noatime,uid=lfs,gid=lfs,size=80%  0 0
-```
-
-Remount all with:
+The `scripts/pkgmk.conf_ram_disk.passes` uses as build directory `PKGMK_WORK_DIR="/var/pkgmk/work"`.
 
 ```bash
-mount -a
+mkdir -p /var/pkgmk
 ```
 
-Note since you are now compiling in memory there is no point in keeping -pipe as this will decrease performance.
+
+#### 2. Mount the tmpfs.
+
+Set **size=80%** or a defined number **size=3G**
+
+
+```bash
+mount -t tmpfs -o defaults,noatime,size=80%  pkgmk /var/pkgmk
+```
+
+#### 3. Verify it is enabled
+
+```bash
+df
+```
+
+#### 4. OPTIONAL: Add this line to the end of /etc/fstab to make the change permanent.
+
+```
+pkgmk   /var/pkgmk tmpfs  defaults,noatime,size=80%  0 0
+```
+
+**NOTE**: since you are now compiling in memory there is no point in keeping -pipe as this will decrease performance.
 
 
 ### Add An Additional SWAP File
 
-1. Create the file to be used for swap. example uses 6GiB
+#### 1. Create the file to be used for swap. example uses 6GiB
 
 ```bash
 fallocate -l 6G /6GiB.swap
@@ -118,37 +132,35 @@ fallocate -l 6G /6GiB.swap
 
 If fallocate fails or is not installed, use the `dd` command to create the file.
 
-2. Format the file for swap.
+
+#### 2. Format the file for swap.
 
 ```bash
 mkswap /6GiB.swap
 ```
 
-4. Optional chmod the swapfile
+
+#### 3. Optional chmod the swapfile
 
 ```
 chmod 600 /6GiB.swap
 ```
 
-3. Enable the swap file
+
+#### 4. Enable the swap file
 
 ```bash
 swapon /6GiB.swap
 ```
 
-5. Check that the swap file is active
+
+#### 5. Verify it is enabled by viewing the output of the command 
 
 ```bash
-swapon /6GiB.swap
+free -h
 ```
 
-6. Verify it is enabled by viewing the output of the command 
-
-```bash
-free
-```
-
-7. Add this line to the end of /etc/fstab to make the change permanent.
+#### 6. OPTIONAL: Add this line to the end of /etc/fstab to make the change permanent.
 
 ```
 /6GiB.swap  none  swap  sw 0  0
@@ -156,6 +168,9 @@ free
 
 
 ### Useful commands
+
+One can run this in another terminal during compilation.
+
 
 #### To Check RAM/SWAP usage
 

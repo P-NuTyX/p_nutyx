@@ -127,13 +127,13 @@ cd /home/lfs/current/chroot
 If you configured the (OPTIONAL) RAM Disk there is no point in keeping -pipe as this will decrease performance.
 
 ```bash
-pass pkgmk.conf_no_pipe.passes
+pass pkgmk.conf_ram_disk.passes
 ```
 
 
 #### Without (OPTIONAL) RAM Disk
 
-Just run the commnd below which will use the default: `pkgmk.conf.passes` with -pipe.
+Just run the command below which will use the default: `pkgmk.conf.passes`.
 
 ```bash
 pass
