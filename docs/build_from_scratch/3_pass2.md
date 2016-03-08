@@ -71,24 +71,41 @@ This package does not contain any code - it just creates all the folders for a B
 
 Option `pkgmk`: -cf,  --config-file <file>:  use alternative configuration file
 
+Change the directory by running:
+
 ```bash
 cd $LFS/root/current/base/nutyx
+```
+
+#### With (OPTIONAL) RAM Disk
+
+If you configured the (OPTIONAL) RAM Disk run the command below using: `pkgmk.conf_ram_disk.passes`.
+
+```bash
+/tools/bin/pkgmk -cf ../../../bin/pkgmk.conf_ram_disk.passes
+```
+
+#### Without (OPTIONAL) RAM Disk
+
+Just run the command below using: `pkgmk.conf.passes`.
+
+```bash
 /tools/bin/pkgmk -cf ../../../bin/pkgmk.conf.passes
 ```
 
 **Install the package.**
-
-Option `pkgadd`: -r, --root <path>:   specify alternative installation root
 
 ```bash
 /tools/bin/pkgadd -r $LFS nutyx1*
 /tools/bin/pkgadd -r $LFS nutyx.man1*
 ```
 
+*Options:*
+
+* `-r, --root <path>`:   specify alternative installation root
+
+
 **Confirm that it is correctly installed.**
-
-Option `pkginfo`: -r, --root <path>:   specify alternative installation root
-
 
 ```bash
 /tools/bin/pkginfo -r $LFS -i
@@ -112,6 +129,8 @@ bash $LFS/root/current/scripts/install-nutyx -ic
 
 
 ### 6. Mount Needed Folders / Filesystems
+
+**TODO** check what needs to be changed for using the optional RAM Disk
 
 ```bash
 mount -v -B /dev $LFS/dev
@@ -188,14 +207,35 @@ export PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin:/root/bin
 
 ### 11. Run The Second PASS
 
+TODO: What about CFLAGS -march=native?
+
+
 This will launch the compilation of the packages.
+
+Change the directory by running:
 
 ```bash
 cd /root/current/base
+```
+
+**With (OPTIONAL) RAM Disk**
+
+If you configured the (OPTIONAL) RAM Disk there is no point in keeping -pipe as this will decrease performance.
+
+```bash
+pass pkgmk.conf_ram_disk.passes
+```
+
+**Without (OPTIONAL) RAM Disk**
+
+Just run the command below which will use the default: `pkgmk.conf.passes`.
+
+```bash
 pass
 ```
 
-return
+
+returns...
 
 ```
 tar -p -o -C /tmp/work/src -xf /sources/linux-3.19.3.tar.xz
