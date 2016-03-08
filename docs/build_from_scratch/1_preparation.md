@@ -72,9 +72,15 @@ mkdir /mnt/lfs
     * TIP: Make sure this partition is always mounted prior to the start of `pass 1 or 2`.
 
 
+-----------------------------------------------------------------------------------------------------------------------
+
+
 ## Speed Up Compilation (OPTIONAL) RAM Disk
 
 This is part is OPTIONAL.
+
+
+### Set Up The RAM Disk
 
 One way to reduce disk access and prolonging the life of the disk as well as to speed up compilation, is by using a
 RAM Disk.
@@ -83,7 +89,7 @@ Note you need a decent amount of ram that is dynamically used (this won't be use
 Recommended are 4 GiB or more.
 
 
-### Edit the host `fstab`
+#### Edit the host `fstab`
 
 The `scripts/pkgmk.conf.passes` uses as build directory `PKGMK_WORK_DIR="/tmp/work"`.
 
@@ -100,3 +106,66 @@ mount -a
 ```
 
 Note since you are now compiling in memory there is no point in keeping -pipe as this will decrease performance.
+
+
+### Add An Additional SWAP File
+
+1. Create the file to be used for swap. example uses 6GiB
+
+```bash
+fallocate -l 6G /6GiB.swap
+```
+
+If fallocate fails or is not installed, use the `dd` command to create the file.
+
+2. Format the file for swap.
+
+```bash
+mkswap /6GiB.swap
+```
+
+4. Optional chmod the swapfile
+
+```
+chmod 600 /6GiB.swap
+```
+
+3. Enable the swap file
+
+```bash
+swapon /6GiB.swap
+```
+
+5. Check that the swap file is active
+
+```bash
+swapon /6GiB.swap
+```
+
+6. Verify it is enabled by viewing the output of the command 
+
+```bash
+free
+```
+
+7. Add this line to the end of /etc/fstab to make the change permanent.
+
+```
+/6GiB.swap  none  swap  sw 0  0
+```
+
+
+### Useful commands
+
+#### To Check RAM/SWAP usage
+
+```bash
+free -h
+```
+
+
+#### To Check TMPFS usage
+
+```bash
+df
+```
