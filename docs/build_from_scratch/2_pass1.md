@@ -71,7 +71,7 @@ PATH=/home/lfs/bin:/tools/bin:/bin:/usr/bin
 export LFS LC_ALL LFS_TGT PATH " > /home/lfs/.bashrc
 ```
 
-6. Change to the LFS unprivildge user part
+### 6. Change to the LFS unprivildge user part
 
 ```bash
 su - lfs

@@ -7,7 +7,7 @@ color_mesg
 version="current"
 [ -z "${URL}" ] && URL="http://downloads.nutyx.org"
 echo
-msg "$(gettext "This script will run some of pre-checks and")"
+msg "$(gettext "This script will run some pre-checks and")"
 msg "$(gettext "download missing sources...")"
 msg2 "$(gettext "Press 'ENTER' to continue or 'ctrl+c' to exit.")"
 
