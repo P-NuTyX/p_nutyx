@@ -93,6 +93,8 @@ cd current
 
 The script will run some checks and NO error should occur. The downloading of the sources will start automatically. 
 
+NOTE: one can re-run this scripts in case it was interrupted.
+
 ```bash
 scripts/runmebeforepass1
 ```
