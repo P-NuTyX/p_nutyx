@@ -31,7 +31,7 @@ ln -svf $LFS/sources /
 ```
 
 
-### 3. Creation Of The LFS User
+### 3. Creation Of The LFS Group & User
 
 ```bash
 groupadd lfs

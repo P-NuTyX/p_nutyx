@@ -59,7 +59,7 @@ rm -rf /mnt/lfs
 It is possible to build the new linux distribution in a folder, or a dedicated partition.
 
 
-### Create The Target Folder
+### Create The Target Directory
 
 ```bash
 mkdir /mnt/lfs
